@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<style>
+  body{
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f6f9;
+  }
+
+  .auth-box{
+    width: 320px;
+    margin: 40px auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    padding: 20px;
+  }
+
+  .auth-box ul{
+    list-style: none;
+    padding: 0;
+  }
+
+  .auth-box li{
+    margin: 10px 0;
+    font-size: 15px;
+  }
+
+  .auth-box b{
+    color: #333;
+  }
+
+  .auth-box a{
+    display: inline-block;
+    padding: 8px 14px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: 0.3s;
+  }
+
+  .auth-box a:hover{
+    background: #0056b3;
+  }
+
+  .admin-btn{
+    background: #28a745 !important;
+  }
+
+  .admin-btn:hover{
+    background: #1e7e34 !important;
+  }
+
+  .logout-btn{
+    background: #dc3545 !important;
+  }
+
+  .logout-btn:hover{
+    background: #b02a37 !important;
+  }
+
+  .notice{
+    color: #666;
+  }
+</style>
+<body>
+<<div class="auth-box" th:switch="${@auth.authenticated}">
+  <ul th:case="true">
+    <li>Username: <b th:text="${@auth.username}"></b></li>
+    <li>Roles: <b th:text="${@auth.roles}"></b></li>
+    <li><a class="logout-btn" th:href="@{/logout}">Sign-out</a></li>
+    <li th:if="${@auth.hasAnyRole('ADMIN')}">
+      <a class="admin-btn" href="#">Goto Administration</a>
+    </li>
+  </ul>
+
+  <ul th:case="false">
+    <li class="notice">Bạn chưa đăng nhập</li>
+    <li><a th:href="@{/login/form}">Sign-in</a></li>
+  </ul>
+</div>
+</body>
+</html>
